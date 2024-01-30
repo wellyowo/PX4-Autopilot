@@ -29,31 +29,27 @@ void ComputeGravityZInnovVarAndH(const matrix::Matrix<Scalar, 24, 1>& state,
                                  const matrix::Matrix<Scalar, 23, 23>& P, const Scalar R,
                                  Scalar* const innov_var = nullptr,
                                  matrix::Matrix<Scalar, 23, 1>* const Hz = nullptr) {
-  // Total ops: 18
+  // Total ops: 0
+
+  // Unused inputs
+  (void)state;
+  (void)P;
 
   // Input arrays
 
-  // Intermediate terms (4)
-  const Scalar _tmp0 = 2 * state(2, 0);
-  const Scalar _tmp1 = 2 * state(1, 0);
-  const Scalar _tmp2 = _tmp0 * state(3, 0) + _tmp1 * state(0, 0);
-  const Scalar _tmp3 = _tmp0 * state(0, 0) - _tmp1 * state(3, 0);
+  // Intermediate terms (0)
 
   // Output terms (2)
   if (innov_var != nullptr) {
     Scalar& _innov_var = (*innov_var);
 
-    _innov_var = R + _tmp2 * (P(0, 0) * _tmp2 + P(1, 0) * _tmp3) +
-                 _tmp3 * (P(0, 1) * _tmp2 + P(1, 1) * _tmp3);
+    _innov_var = R;
   }
 
   if (Hz != nullptr) {
     matrix::Matrix<Scalar, 23, 1>& _hz = (*Hz);
 
     _hz.setZero();
-
-    _hz(0, 0) = _tmp2;
-    _hz(1, 0) = _tmp3;
   }
 }  // NOLINT(readability/fn_size)
 

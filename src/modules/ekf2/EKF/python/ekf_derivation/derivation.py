@@ -613,7 +613,9 @@ def predict_gravity_direction(state: State):
 
     # the innovation is the error between measured acceleration
     #  and predicted (body frame), assuming no body acceleration
-    return R_to_body * sf.Matrix([0,0,-1])
+    g_body = R_to_body * sf.Matrix([0,0,-1])
+    g_body[2] = 0
+    return g_body
 
 def compute_gravity_xyz_innov_var_and_hx(
         state: VState,
